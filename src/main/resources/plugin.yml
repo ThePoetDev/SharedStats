@@ -1,0 +1,13 @@
+  name: SharedStats
+  main: me.thepoetdev.Main
+  version: ${version}
+  description: A test plugin
+  api-version: 1.18
+  author: ThePoetDev
+  website: spigot.org
+  commands:
+    sharedstats:
+      description: All commands to deal with SharedStats
+      permission: sharedstats.commands
+      permission-message: You do not have permission!
+      usage: /<command>
