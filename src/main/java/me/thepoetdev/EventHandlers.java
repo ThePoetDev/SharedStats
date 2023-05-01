@@ -1,5 +1,6 @@
 package me.thepoetdev;
 
+import me.thepoetdev.config.CustomConfig;
 import me.thepoetdev.utils.Text;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
@@ -17,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
+
+import java.util.List;
 
 public class EventHandlers implements Listener {
 
@@ -114,6 +117,13 @@ public class EventHandlers implements Listener {
 
     @EventHandler
     public static void onRightClick(PlayerInteractEvent e) {
+        List<String> ingredients = CustomConfig.getConfig().getStringList("SmallHealthPiece.Shape");
+        if(ingredients.isEmpty()){
+            e.getPlayer().sendMessage("Empty.");
+        }
+        for(String ingredient: ingredients){
+            e.getPlayer().sendMessage(ingredient);
+        }
         if (e.getItem() == null) {
             return;
         }

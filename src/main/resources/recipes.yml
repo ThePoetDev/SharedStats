@@ -1,0 +1,39 @@
+SmallHealthPiece:
+  Shape:
+    - yxy
+    - xzx
+    - yxy
+  Ingredient:
+    - 'x': "DIAMOND"
+      'y': "IRON_BLOCK"
+      'z': "EMERALD"
+
+MediumHealthPiece:
+  Shape:
+    - yxy
+    - xzx
+    - yxy
+  Ingredient:
+    - 'x': "DIAMOND"
+      'y': "IRON_BLOCK"
+      'z': "EMERALD"
+
+StrongHealthPiece:
+  Shape:
+    - yxy
+    - xzx
+    - yxy
+  Ingredient:
+    - 'x': "DIAMOND"
+      'y': "IRON_BLOCK"
+      'z': "EMERALD"
+
+UltraHealthPiece:
+  Shape:
+    - yxy
+    - xzx
+    - yxy
+  Ingredient:
+    - 'x': "DIAMOND"
+      'y': "IRON_BLOCK"
+      'z': "EMERALD"

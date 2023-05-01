@@ -1,5 +1,6 @@
 package me.thepoetdev;
 
+import me.thepoetdev.config.CustomConfig;
 import me.thepoetdev.utils.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,6 +12,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
+import java.util.Map;
 
 public class Main extends JavaPlugin implements CommandExecutor {
     private static Main instance;
@@ -37,6 +41,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
     FileConfiguration config = getConfig();
 
     public void onEnable() {
+        CustomConfig.registerCustomConfig(this);
         Bukkit.getPluginManager().registerEvents(new EventHandlers(), this);
         instance = this;
         if (this.config.getConfigurationSection("settings") == null) {
@@ -93,40 +98,72 @@ public class Main extends JavaPlugin implements CommandExecutor {
     public void addRecipes() {
         key1 = new NamespacedKey(this, "lowhealthitem");
         ShapedRecipe recipe = new ShapedRecipe(key1, Items.lowHealthItem());
-        recipe.shape("IDI", "DED", "IDI");
+        List<String> ingredients = CustomConfig.getConfig().getStringList("SmallHealthPiece.Shape");
+        recipe.shape(ingredients.get(0), ingredients.get(1), ingredients.get(2));
 
-        recipe.setIngredient('D', Material.DIAMOND);
-        recipe.setIngredient('I', Material.IRON_BLOCK);
-        recipe.setIngredient('E', Material.EMERALD);
+        List<Map<?,?>> map = CustomConfig.getConfig().getMapList("SmallHealthPiece.Ingredient");
+        for(int i = 0; i < map.size(); i++){
+            Map<?, ?> ingredient = map.get(i);
+            for (Map.Entry<?, ?> entry : ingredient.entrySet()) {
+                Character key = ((String)entry.getKey()).charAt(0);
+                Material material = Material.getMaterial((String)entry.getValue());
+                recipe.setIngredient(key, material);
+            }
+        }
+
+
+        Bukkit.addRecipe(recipe);
 
         key2 = new NamespacedKey(this, "midhealthitem");
         ShapedRecipe recipe2 = new ShapedRecipe(key2, Items.midHealthItem());
-        recipe2.shape("IDD", "DED", "IDI");
 
-        recipe2.setIngredient('D', Material.DIAMOND);
-        recipe2.setIngredient('I', Material.IRON_BLOCK);
-        recipe2.setIngredient('E', Material.EMERALD);
+        ingredients = CustomConfig.getConfig().getStringList("MediumHealthPiece.Shape");
+        recipe2.shape(ingredients.get(0), ingredients.get(1), ingredients.get(2));
+
+        map = CustomConfig.getConfig().getMapList("MediumHealthPiece.Ingredient");
+        for(int i = 0; i < map.size(); i++){
+            Map<?, ?> ingredient = map.get(i);
+            for (Map.Entry<?, ?> entry : ingredient.entrySet()) {
+                Character key = ((String)entry.getKey()).charAt(0);
+                Material material = Material.getMaterial((String)entry.getValue());
+                recipe2.setIngredient(key, material);
+            }
+        }
+
+        Bukkit.addRecipe(recipe2);
 
         key3 = new NamespacedKey(this, "highhealthitem");
         ShapedRecipe recipe3 = new ShapedRecipe(key3, Items.highHealthItem());
-        recipe3.shape("IDI", "DDD", "IDE");
+        ingredients = CustomConfig.getConfig().getStringList("StrongHealthPiece.Shape");
+        recipe3.shape(ingredients.get(0), ingredients.get(1), ingredients.get(2));
 
-        recipe3.setIngredient('D', Material.DIAMOND);
-        recipe3.setIngredient('I', Material.IRON_BLOCK);
-        recipe3.setIngredient('E', Material.EMERALD);
+        map = CustomConfig.getConfig().getMapList("StrongHealthPiece.Ingredient");
+        for(int i = 0; i < map.size(); i++){
+            Map<?, ?> ingredient = map.get(i);
+            for (Map.Entry<?, ?> entry : ingredient.entrySet()) {
+                Character key = ((String)entry.getKey()).charAt(0);
+                Material material = Material.getMaterial((String)entry.getValue());
+                recipe3.setIngredient(key, material);
+            }
+        }
+        Bukkit.addRecipe(recipe3);
 
         key4 = new NamespacedKey(this, "ultrahealthitem");
         ShapedRecipe recipe4 = new ShapedRecipe(key4, Items.ultraHealthItem());
-        recipe4.shape("IDI", "DED", "IDD");
+        ingredients = CustomConfig.getConfig().getStringList("UltraHealthPiece.Shape");
+        recipe4.shape(ingredients.get(0), ingredients.get(1), ingredients.get(2));
 
-        recipe4.setIngredient('D', Material.DIAMOND);
-        recipe4.setIngredient('I', Material.IRON_BLOCK);
-        recipe4.setIngredient('E', Material.EMERALD);
-
-        Bukkit.addRecipe(recipe);
-        Bukkit.addRecipe(recipe2);
-        Bukkit.addRecipe(recipe3);
+        map = CustomConfig.getConfig().getMapList("UltraHealthPiece.Ingredient");
+        for(int i = 0; i < map.size(); i++){
+            Map<?, ?> ingredient = map.get(i);
+            for (Map.Entry<?, ?> entry : ingredient.entrySet()) {
+                Character key = ((String)entry.getKey()).charAt(0);
+                Material material = Material.getMaterial((String)entry.getValue());
+                recipe4.setIngredient(key, material);
+            }
+        }
         Bukkit.addRecipe(recipe4);
+
     }
 
     public NamespacedKey getKey1() {
