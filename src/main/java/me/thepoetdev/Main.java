@@ -44,49 +44,40 @@ public class Main extends JavaPlugin implements CommandExecutor {
         CustomConfig.registerCustomConfig(this);
         Bukkit.getPluginManager().registerEvents(new EventHandlers(), this);
         instance = this;
-        if (this.config.getConfigurationSection("settings") == null) {
-            this.config.createSection("settings");
-            MiscMechanics.setDefaults();
-            saveSettings();
-        } else {
-            ConfigurationSection block = this.config.getConfigurationSection("settings");
-            shareHealth = block.getBoolean("shareHealth");
-            shareHunger = block.getBoolean("shareHunger");
-            sharedArmorDamage = block.getBoolean("sharedArmorDamage");
-            globalMaxHealth = block.getInt("globalMaxHealth");
-            globalMaxHunger = block.getInt("globalMaxHunger");
-            globalHungerRollChance = block.getInt("globalHungerRollChance");
-            globalHungerLevel = block.getInt("globalHungerLevel");
-            globalHealth = block.getInt("globalHealth");
-            globalAbsorption = block.getInt("globalAbsorption");
-            globalExperience = block.getInt("globalExperience");
-            damagerate = block.getDouble("damagerate");
-            hungerrate = block.getInt("damagerate");
-        }
+        this.saveDefaultConfig();
+
+        shareHealth = getConfig().getBoolean("Settings.shareHealth");
+        shareHunger = getConfig().getBoolean("Settings.shareHunger");
+        sharedArmorDamage = getConfig().getBoolean("Settings.sharedArmorDamage");
+        globalMaxHealth = getConfig().getInt("Settings.globalMaxHealth");
+        globalMaxHunger = getConfig().getInt("Settings.globalMaxHunger");
+        globalHungerRollChance = getConfig().getInt("Settings.globalHungerRollChance");
+        globalHungerLevel = getConfig().getInt("Settings.globalHungerLevel");
+        globalHealth = getConfig().getInt("Settings.globalHealth");
+        globalAbsorption = getConfig().getInt("Settings.globalAbsorption");
+        globalExperience = getConfig().getInt("Settings.globalExperience");
+        damagerate = getConfig().getDouble("Settings.damagerate");
+        hungerrate = getConfig().getInt("Settings.hungerrate");
+
 
         addRecipes();
     }
 
     @Override
     public void onDisable() {
+        getConfig().set("Settings.shareHealth", shareHealth);
+        getConfig().set("Settings.shareHunger", shareHunger);
+        getConfig().set("Settings.sharedArmorDamage", sharedArmorDamage);
+        getConfig().set("Settings.globalMaxHealth", globalMaxHealth);
+        getConfig().set("Settings.globalMaxHunger", globalMaxHunger);
+        getConfig().set("Settings.globalHungerRollChance", globalHungerRollChance);
+        getConfig().set("Settings.globalHungerLevel", globalHungerLevel);
+        getConfig().set("Settings.globalHealth", globalHealth);
+        getConfig().set("Settings.globalAbsorption", globalAbsorption);
+        getConfig().set("Settings.globalExperience", globalExperience);
+        getConfig().set("Settings.damagerate", damagerate);
+        getConfig().set("Settings.hungerrate", hungerrate);
         saveConfig();
-    }
-
-    public void saveSettings() {
-        ConfigurationSection block = this.config.getConfigurationSection("settings");
-        block.set("shareHealth", Boolean.valueOf(shareHealth));
-        block.set("shareHunger", Boolean.valueOf(shareHunger));
-        block.set("globalMaxHealth", Double.valueOf(globalMaxHealth));
-        block.set("globalMaxHunger", Integer.valueOf(globalMaxHunger));
-        block.set("globalHungerRollChance", Integer.valueOf(globalHungerRollChance));
-        block.set("sharedArmorDamage", Boolean.valueOf(sharedArmorDamage));
-        block.set("damagerate", Double.valueOf(damagerate));
-        block.set("hungerrate", Integer.valueOf(hungerrate));
-        block.set("healthregenrate", Double.valueOf(healthregenrate));
-        block.set("globalHealth", Double.valueOf(globalHealth));
-        block.set("globalAbsorption", Double.valueOf(globalAbsorption));
-        block.set("globalExperience", Integer.valueOf(globalExperience));
-        block.set("globalHungerLevel", Integer.valueOf(globalHungerLevel));
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

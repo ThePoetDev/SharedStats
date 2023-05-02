@@ -12,7 +12,7 @@ MediumHealthPiece:
   Shape:
     - yxy
     - xzx
-    - yxy
+    - yxt
   Ingredient:
     - 'x': "DIAMOND"
       'y': "IRON_BLOCK"

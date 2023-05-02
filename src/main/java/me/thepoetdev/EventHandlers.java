@@ -4,22 +4,29 @@ import me.thepoetdev.config.CustomConfig;
 import me.thepoetdev.utils.Text;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
+import java.util.Random;
 
 public class EventHandlers implements Listener {
 
@@ -47,8 +54,6 @@ public class EventHandlers implements Listener {
                 MiscMechanics.setDefaults();
             }
         }
-
-        Main.getInstance().saveSettings();
     }
 
     @EventHandler
@@ -63,8 +68,6 @@ public class EventHandlers implements Listener {
             }
             PlayerHandler.syncPlayers();
         }
-
-        Main.getInstance().saveSettings();
     }
 
     @EventHandler
@@ -81,8 +84,26 @@ public class EventHandlers implements Listener {
                 }
             PlayerHandler.syncPlayers();
         }
+    }
 
-        Main.getInstance().saveSettings();
+    @EventHandler
+    public static void onConsumeFood(PlayerItemConsumeEvent e){
+        if(Main.shareHunger){
+            if(e.getItem().getType() == Material.ROTTEN_FLESH){
+                e.getPlayer().getInventory().getItem(e.getHand()).setAmount(e.getPlayer().getInventory().getItem(e.getHand()).getAmount() - 1);
+                Random rand = new Random();
+                Main.globalHungerLevel += 4;
+                PlayerHandler.syncPlayers();
+
+                if(rand.nextInt() > 20){
+                    Bukkit.getOnlinePlayers().forEach(players -> {
+                        players.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 15*20, 0));
+                    });
+                }
+
+                e.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
@@ -94,7 +115,6 @@ public class EventHandlers implements Listener {
         if (Main.shareHunger)
             event.getPlayer().setFoodLevel(Main.globalHungerLevel);
 
-        Main.getInstance().saveSettings();
     }
 
     @EventHandler
@@ -104,7 +124,6 @@ public class EventHandlers implements Listener {
             Main.globalHungerLevel = Main.globalMaxHunger;
         }
 
-        Main.getInstance().saveSettings();
     }
 
     @EventHandler
@@ -117,13 +136,6 @@ public class EventHandlers implements Listener {
 
     @EventHandler
     public static void onRightClick(PlayerInteractEvent e) {
-        List<String> ingredients = CustomConfig.getConfig().getStringList("SmallHealthPiece.Shape");
-        if(ingredients.isEmpty()){
-            e.getPlayer().sendMessage("Empty.");
-        }
-        for(String ingredient: ingredients){
-            e.getPlayer().sendMessage(ingredient);
-        }
         if (e.getItem() == null) {
             return;
         }
@@ -193,5 +205,4 @@ public class EventHandlers implements Listener {
             }
         }
     }
-
 }

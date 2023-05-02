@@ -1,0 +1,14 @@
+Settings:
+  shareHealth: true
+  shareHunger: true
+  globalMaxHealth: 20.0
+  globalMaxHunger: 24
+  globalHungerRollChance: 1
+  sharedArmorDamage: true
+  damagerate: 0.0
+  hungerrate: 0
+  healthregenrate: 0.0
+  globalHealth: 20.0
+  globalAbsorption: 0.0
+  globalExperience: 0
+  globalHungerLevel: 24
