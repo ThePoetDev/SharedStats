@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="35b494c6-9b6a-4de4-bc16-f787c42245c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/thepoetdev/EventHandlers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/thepoetdev/EventHandlers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/thepoetdev/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/thepoetdev/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/thepoetdev/MiscMechanics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/thepoetdev/MiscMechanics.java" afterDir="false" />
-    </list>
+    <list default="true" id="35b494c6-9b6a-4de4-bc16-f787c42245c4" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
