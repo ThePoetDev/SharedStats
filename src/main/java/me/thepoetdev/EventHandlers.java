@@ -1,22 +1,22 @@
 package me.thepoetdev;
 
+import com.destroystokyo.paper.event.block.AnvilDamagedEvent;
 import me.thepoetdev.config.CustomConfig;
+import me.thepoetdev.utils.Experience;
 import me.thepoetdev.utils.Text;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.enchantment.EnchantItemEvent;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -71,6 +71,23 @@ public class EventHandlers implements Listener {
     }
 
     @EventHandler
+    public void onPlayerExpChange(PlayerExpChangeEvent e) {
+        int amount = e.getAmount();
+        amount += Experience.getExp(e.getPlayer());
+        double levelAndExp = Experience.getLevelFromExp(amount);
+        int level = (int) levelAndExp;
+        Main.globalLevel = level;
+        Main.globalExperience = (float) (levelAndExp - level);
+
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            if (!p.getPlayer().equals(e.getPlayer())) {
+                p.setExp((float) Main.globalExperience);
+                p.setLevel(Main.globalLevel);
+            }
+        });
+    }
+
+    @EventHandler
     public static void onFoodLevelChange(FoodLevelChangeEvent event) {
         if (Main.shareHunger &&
                 event.getEntity() instanceof Player) {
@@ -87,17 +104,51 @@ public class EventHandlers implements Listener {
     }
 
     @EventHandler
-    public static void onConsumeFood(PlayerItemConsumeEvent e){
-        if(Main.shareHunger){
-            if(e.getItem().getType() == Material.ROTTEN_FLESH){
+    public static void onEnchantItem(EnchantItemEvent e){
+        int whichButton = e.whichButton();
+        int level = 1;
+        if(whichButton == 1){
+            level = 2;
+        }else if(whichButton == 2){
+            level = 3;
+        }
+
+        Main.globalLevel -= level;
+        Bukkit.getOnlinePlayers().forEach(p ->{
+            if(!e.getEnchanter().equals(p.getPlayer()))
+                p.setLevel(Main.globalLevel);
+        });
+    }
+
+    @EventHandler
+    public static void useAnvilProgress(AnvilDamagedEvent e){
+        int level = e.getInventory().getResult().getAmount();
+        Main.globalLevel -= level;
+
+        Bukkit.getOnlinePlayers().forEach(p ->{
+            p.setLevel(Main.globalLevel);
+        });
+    }
+
+    @EventHandler
+    public static void onPlayerDeath(PlayerDeathEvent e){
+        Main.globalExperience = 0;
+        Main.globalLevel = 0;
+    }
+
+
+    @EventHandler
+    public static void onConsumeFood(PlayerItemConsumeEvent e) {
+        if (Main.shareHunger) {
+            if (e.getItem().getType() == Material.ROTTEN_FLESH) {
                 e.getPlayer().getInventory().getItem(e.getHand()).setAmount(e.getPlayer().getInventory().getItem(e.getHand()).getAmount() - 1);
                 Random rand = new Random();
                 Main.globalHungerLevel += 4;
                 PlayerHandler.syncPlayers();
 
-                if(rand.nextInt() > 20){
+                if (rand.nextInt() > 20) {
                     Bukkit.getOnlinePlayers().forEach(players -> {
-                        players.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 15*20, 0));
+                        players.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 15 * 20, 0));
                     });
                 }
 
@@ -105,6 +156,7 @@ public class EventHandlers implements Listener {
             }
         }
     }
+
 
     @EventHandler
     public static void onPlayerJoin(PlayerJoinEvent event) {
@@ -115,6 +167,8 @@ public class EventHandlers implements Listener {
         if (Main.shareHunger)
             event.getPlayer().setFoodLevel(Main.globalHungerLevel);
 
+        event.getPlayer().setLevel(Main.globalLevel);
+        event.getPlayer().setExp((float) Main.globalExperience);
     }
 
     @EventHandler
@@ -124,6 +178,13 @@ public class EventHandlers implements Listener {
             Main.globalHungerLevel = Main.globalMaxHunger;
         }
 
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                event.getPlayer().setLevel(Main.globalLevel);
+                event.getPlayer().setExp((float) Main.globalExperience);
+            }
+        }, 1L);
     }
 
     @EventHandler

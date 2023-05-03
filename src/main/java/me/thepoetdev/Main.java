@@ -27,11 +27,12 @@ public class Main extends JavaPlugin implements CommandExecutor {
     public static double globalAbsorption;
     public static double healthregenrate;
     public static double damagerate;
+    public static double globalExperience;
     public static int globalMaxHunger;
     public static int globalHungerLevel;
     public static int globalHungerRollChance;
-    public static int globalExperience;
     public static int hungerrate;
+    public static int globalLevel;
 
     private NamespacedKey key1;
     private NamespacedKey key2;
@@ -55,9 +56,10 @@ public class Main extends JavaPlugin implements CommandExecutor {
         globalHungerLevel = getConfig().getInt("Settings.globalHungerLevel");
         globalHealth = getConfig().getInt("Settings.globalHealth");
         globalAbsorption = getConfig().getInt("Settings.globalAbsorption");
-        globalExperience = getConfig().getInt("Settings.globalExperience");
         damagerate = getConfig().getDouble("Settings.damagerate");
         hungerrate = getConfig().getInt("Settings.hungerrate");
+        globalExperience = getConfig().getDouble("Settings.globalExperience");
+        globalLevel = getConfig().getInt("Settings.globalLevel");
 
 
         addRecipes();
@@ -74,9 +76,10 @@ public class Main extends JavaPlugin implements CommandExecutor {
         getConfig().set("Settings.globalHungerLevel", globalHungerLevel);
         getConfig().set("Settings.globalHealth", globalHealth);
         getConfig().set("Settings.globalAbsorption", globalAbsorption);
-        getConfig().set("Settings.globalExperience", globalExperience);
         getConfig().set("Settings.damagerate", damagerate);
         getConfig().set("Settings.hungerrate", hungerrate);
+        getConfig().set("Settings.globalLevel", globalLevel);
+        getConfig().set("Settings.globalExperience", globalExperience);
         saveConfig();
     }
 

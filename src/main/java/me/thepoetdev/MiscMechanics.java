@@ -35,7 +35,6 @@ public class MiscMechanics extends JavaPlugin {
         Main.globalMaxHealth = 40.0D;
         Main.globalHealth = 40.0D;
         Main.globalAbsorption = 0.0D;
-        Main.globalExperience = 0;
         Main.globalMaxHunger = 24;
         Main.globalHungerLevel = 24;
         Main.globalHungerRollChance = 1;
@@ -43,5 +42,7 @@ public class MiscMechanics extends JavaPlugin {
         Main.healthregenrate = 0.0D;
         Main.hungerrate = 0;
         Main.damagerate = 0.0D;
+        Main.globalExperience = 0;
+        Main.globalLevel = 0;
     }
 }
