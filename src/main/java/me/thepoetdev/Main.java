@@ -10,9 +10,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,13 +98,19 @@ public class Main extends JavaPlugin implements CommandExecutor {
         List<String> ingredients = CustomConfig.getConfig().getStringList("SmallHealthPiece.Shape");
         recipe.shape(ingredients.get(0), ingredients.get(1), ingredients.get(2));
 
-        List<Map<?,?>> map = CustomConfig.getConfig().getMapList("SmallHealthPiece.Ingredient");
-        for(int i = 0; i < map.size(); i++){
+        List<Map<?, ?>> map = CustomConfig.getConfig().getMapList("SmallHealthPiece.Ingredient");
+        for (int i = 0; i < map.size(); i++) {
             Map<?, ?> ingredient = map.get(i);
             for (Map.Entry<?, ?> entry : ingredient.entrySet()) {
-                Character key = ((String)entry.getKey()).charAt(0);
-                Material material = Material.getMaterial((String)entry.getValue());
-                recipe.setIngredient(key, material);
+                Character key = ((String) entry.getKey()).charAt(0);
+                String materialStr = (String) ((Map<?, ?>) entry.getValue()).get("Material");
+                String enchantStr = (String) ((Map<?, ?>) entry.getValue()).get("Enchant");
+
+                ItemStack item = new ItemStack(Material.getMaterial(materialStr));
+                if(!enchantStr.equals("")){
+                    item.addUnsafeEnchantment(Enchantment.getByName(enchantStr.split(":")[0]), Integer.valueOf(enchantStr.split(":")[1]));
+                }
+                recipe.setIngredient(key, item);
             }
         }
 
@@ -115,12 +124,18 @@ public class Main extends JavaPlugin implements CommandExecutor {
         recipe2.shape(ingredients.get(0), ingredients.get(1), ingredients.get(2));
 
         map = CustomConfig.getConfig().getMapList("MediumHealthPiece.Ingredient");
-        for(int i = 0; i < map.size(); i++){
+        for (int i = 0; i < map.size(); i++) {
             Map<?, ?> ingredient = map.get(i);
             for (Map.Entry<?, ?> entry : ingredient.entrySet()) {
-                Character key = ((String)entry.getKey()).charAt(0);
-                Material material = Material.getMaterial((String)entry.getValue());
-                recipe2.setIngredient(key, material);
+                Character key = ((String) entry.getKey()).charAt(0);
+                String materialStr = (String) ((Map<?, ?>) entry.getValue()).get("Material");
+                String enchantStr = (String) ((Map<?, ?>) entry.getValue()).get("Enchant");
+
+                ItemStack item = new ItemStack(Material.getMaterial(materialStr));
+                if(!enchantStr.equals("")){
+                    item.addUnsafeEnchantment(Enchantment.getByName(enchantStr.split(":")[0]), Integer.valueOf(enchantStr.split(":")[1]));
+                }
+                recipe2.setIngredient(key, item);
             }
         }
 
@@ -132,12 +147,18 @@ public class Main extends JavaPlugin implements CommandExecutor {
         recipe3.shape(ingredients.get(0), ingredients.get(1), ingredients.get(2));
 
         map = CustomConfig.getConfig().getMapList("StrongHealthPiece.Ingredient");
-        for(int i = 0; i < map.size(); i++){
+        for (int i = 0; i < map.size(); i++) {
             Map<?, ?> ingredient = map.get(i);
             for (Map.Entry<?, ?> entry : ingredient.entrySet()) {
-                Character key = ((String)entry.getKey()).charAt(0);
-                Material material = Material.getMaterial((String)entry.getValue());
-                recipe3.setIngredient(key, material);
+                Character key = ((String) entry.getKey()).charAt(0);
+                String materialStr = (String) ((Map<?, ?>) entry.getValue()).get("Material");
+                String enchantStr = (String) ((Map<?, ?>) entry.getValue()).get("Enchant");
+
+                ItemStack item = new ItemStack(Material.getMaterial(materialStr));
+                if(!enchantStr.equals("")){
+                    item.addUnsafeEnchantment(Enchantment.getByName(enchantStr.split(":")[0]), Integer.valueOf(enchantStr.split(":")[1]));
+                }
+                recipe3.setIngredient(key, item);
             }
         }
         Bukkit.addRecipe(recipe3);
@@ -148,14 +169,21 @@ public class Main extends JavaPlugin implements CommandExecutor {
         recipe4.shape(ingredients.get(0), ingredients.get(1), ingredients.get(2));
 
         map = CustomConfig.getConfig().getMapList("UltraHealthPiece.Ingredient");
-        for(int i = 0; i < map.size(); i++){
+        for (int i = 0; i < map.size(); i++) {
             Map<?, ?> ingredient = map.get(i);
             for (Map.Entry<?, ?> entry : ingredient.entrySet()) {
-                Character key = ((String)entry.getKey()).charAt(0);
-                Material material = Material.getMaterial((String)entry.getValue());
-                recipe4.setIngredient(key, material);
+                Character key = ((String) entry.getKey()).charAt(0);
+                String materialStr = (String) ((Map<?, ?>) entry.getValue()).get("Material");
+                String enchantStr = (String) ((Map<?, ?>) entry.getValue()).get("Enchant");
+
+                ItemStack item = new ItemStack(Material.getMaterial(materialStr));
+                if(!enchantStr.equals("")){
+                    item.addUnsafeEnchantment(Enchantment.getByName(enchantStr.split(":")[0]), Integer.valueOf(enchantStr.split(":")[1]));
+                }
+                recipe4.setIngredient(key, item);
             }
         }
+
         Bukkit.addRecipe(recipe4);
 
     }

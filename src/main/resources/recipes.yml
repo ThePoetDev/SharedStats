@@ -4,36 +4,78 @@ SmallHealthPiece:
     - xzx
     - yxy
   Ingredient:
-    - 'x': "DIAMOND"
-      'y': "IRON_BLOCK"
-      'z': "EMERALD"
+    - x:
+        Material: "DIAMOND"
+        Enchant: ""
+    - y:
+        Material: "IRON_BLOCK"
+        Enchant: ""
+    - z:
+        Material: "EMERALD"
+        Enchant: ""
 
 MediumHealthPiece:
   Shape:
-    - yxy
-    - xzx
-    - yxt
+    - xyx
+    - yzy
+    - xyx
   Ingredient:
-    - 'x': "DIAMOND"
-      'y': "IRON_BLOCK"
-      'z': "EMERALD"
+    - x:
+        Material: "IRON_BLOCK"
+        Enchant: ""
+    - y:
+        Material: "EMERALD_BLOCK"
+        Enchant: ""
+    - z:
+        Material: "DIAMOND_BLOCK"
+        Enchant: ""
 
 StrongHealthPiece:
   Shape:
-    - yxy
-    - xzx
-    - yxy
+    - xyx
+    - ztz
+    - kzl
   Ingredient:
-    - 'x': "DIAMOND"
-      'y': "IRON_BLOCK"
-      'z': "EMERALD"
+    - x:
+        Material: "ENCHANTED_BOOK"
+        Enchant: "ARROW_DAMAGE:5"
+    - y:
+        Material: "WITHER_ROSE"
+        Enchant: ""
+    - z:
+        Material: "SPONGE"
+        Enchant: ""
+    - t:
+        Material: "ANCIENT_DEBRIS"
+        Enchant: ""
+    - k:
+        Material: "HONEYCOMB"
+        Enchant: ""
+    - l:
+        Material: "NAUTILUS_SHELL"
+        Enchant: ""
 
 UltraHealthPiece:
   Shape:
-    - yxy
-    - xzx
-    - yxy
+    - xyz
+    - tkt
+    - lll
   Ingredient:
-    - 'x': "DIAMOND"
-      'y': "IRON_BLOCK"
-      'z': "EMERALD"
+    - x:
+        Material: "HEART_OF_THE_SEA"
+        Enchant: ""
+    - y:
+        Material: "DRAGON_HEAD"
+        Enchant: ""
+    - z:
+        Material: "ENCHANTED_GOLDEN_APPLE"
+        Enchant: ""
+    - t:
+        Material: "RED_SHULKER_BOX"
+        Enchant: ""
+    - k:
+        Material: "ENCHANTING_TABLE"
+        Enchant: ""
+    - l:
+        Material: "ANVIL"
+        Enchant: ""
