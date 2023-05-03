@@ -15,8 +15,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -104,34 +107,46 @@ public class EventHandlers implements Listener {
     }
 
     @EventHandler
-    public static void onEnchantItem(EnchantItemEvent e){
+    public static void onEnchantItem(EnchantItemEvent e) {
         int whichButton = e.whichButton();
         int level = 1;
-        if(whichButton == 1){
+        if (whichButton == 1) {
             level = 2;
-        }else if(whichButton == 2){
+        } else if (whichButton == 2) {
             level = 3;
         }
 
         Main.globalLevel -= level;
-        Bukkit.getOnlinePlayers().forEach(p ->{
-            if(!e.getEnchanter().equals(p.getPlayer()))
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            if (!e.getEnchanter().equals(p.getPlayer()))
                 p.setLevel(Main.globalLevel);
         });
     }
 
     @EventHandler
-    public static void useAnvilProgress(AnvilDamagedEvent e){
-        int level = e.getInventory().getResult().getAmount();
-        Main.globalLevel -= level;
+    public void inventoryClickEvent(InventoryClickEvent e){
+        if(!(e.getInventory() instanceof AnvilInventory)){
+            return;
+        }
 
-        Bukkit.getOnlinePlayers().forEach(p ->{
-            p.setLevel(Main.globalLevel);
-        });
+        if(e.getSlot() == 2){
+            AnvilInventory anvilInv = (AnvilInventory) e.getInventory();
+            Player player = (Player) e.getView().getPlayer();
+            int repairCost = anvilInv.getRepairCost();
+            int expLevel = player.getLevel();
+            int finalLevel = expLevel - repairCost;
+
+            Bukkit.getOnlinePlayers().forEach(p->{
+                if(!p.getPlayer().equals(player))
+                    p.setLevel(finalLevel);
+            });
+
+            Main.globalLevel = finalLevel;
+        }
     }
 
     @EventHandler
-    public static void onPlayerDeath(PlayerDeathEvent e){
+    public static void onPlayerDeath(PlayerDeathEvent e) {
         Main.globalExperience = 0;
         Main.globalLevel = 0;
     }
