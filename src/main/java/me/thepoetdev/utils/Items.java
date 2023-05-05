@@ -28,6 +28,7 @@ public class Items extends JavaPlugin {
         meta.setDisplayName(Text.colorize(CustomConfig.getConfig().getString("SmallHealthPiece.Name")));
         List<String> lore = Collections.singletonList(Text.colorize("&6That item gives you power, when your max health 1-5."));
         meta.setLore(lore);
+        meta.setColor(Color.AQUA);
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 
         PersistentDataContainer data = meta.getPersistentDataContainer();

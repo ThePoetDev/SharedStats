@@ -30,6 +30,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EventHandlers implements Listener {
 
@@ -222,11 +223,10 @@ public class EventHandlers implements Listener {
 
             if (e.getItem().getType() == Material.ROTTEN_FLESH) {
                 e.getPlayer().getInventory().getItem(e.getHand()).setAmount(e.getPlayer().getInventory().getItem(e.getHand()).getAmount() - 1);
-                Random rand = new Random();
                 Main.globalHungerLevel += 4;
                 PlayerHandler.syncPlayers();
 
-                if (rand.nextInt() > 20) {
+                if (ThreadLocalRandom.current().nextInt(0, 100) > 20) {
                     Bukkit.getOnlinePlayers().forEach(players -> {
                         players.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 15 * 20, 0));
                     });

@@ -1,5 +1,5 @@
 SmallHealthPiece:
-  Name: "&4Small Health Potion"
+  Name: "&3Small Health Potion"
   Shape:
     - yxy
     - xzx
@@ -16,7 +16,7 @@ SmallHealthPiece:
         Enchant: ""
 
 MediumHealthPiece:
-  Name: "&4Mid Health Potion"
+  Name: "&3Mid Health Potion"
   Shape:
     - xyx
     - yzy
@@ -33,7 +33,7 @@ MediumHealthPiece:
         Enchant: ""
 
 StrongHealthPiece:
-  Name: "&4Strong Health Potion"
+  Name: "&3Strong Health Potion"
   Shape:
     - xyx
     - ztz
@@ -59,7 +59,7 @@ StrongHealthPiece:
         Enchant: ""
 
 UltraHealthPiece:
-  Name: "&4Ultra Health Potion"
+  Name: "&3Ultra Health Potion"
   Shape:
     - xyz
     - tkt
