@@ -1,5 +1,6 @@
 package me.thepoetdev.utils;
 
+import me.thepoetdev.config.CustomConfig;
 import me.thepoetdev.utils.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -24,10 +25,9 @@ public class Items extends JavaPlugin {
     public static ItemStack lowHealthItem(){
         ItemStack item = new ItemStack(Material.POTION);
         PotionMeta meta = (PotionMeta) item.getItemMeta();
-        meta.setDisplayName(Text.colorize("&4Small Health Potion"));
+        meta.setDisplayName(Text.colorize(CustomConfig.getConfig().getString("SmallHealthPiece.Name")));
         List<String> lore = Collections.singletonList(Text.colorize("&6That item gives you power, when your max health 1-5."));
         meta.setLore(lore);
-        meta.setColor(Color.AQUA);
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 
         PersistentDataContainer data = meta.getPersistentDataContainer();
@@ -42,7 +42,7 @@ public class Items extends JavaPlugin {
     public static ItemStack midHealthItem(){
         ItemStack item = new ItemStack(Material.POTION);
         PotionMeta meta = (PotionMeta) item.getItemMeta();
-        meta.setDisplayName(Text.colorize("&4Mid Health Potion"));
+        meta.setDisplayName(Text.colorize(CustomConfig.getConfig().getString("MediumHealthPiece.Name")));
         List<String> lore = Collections.singletonList(Text.colorize("&6That item gives you power, when your max health 6-10."));
         meta.setLore(lore);
         meta.setColor(Color.LIME);
@@ -60,7 +60,7 @@ public class Items extends JavaPlugin {
     public static ItemStack highHealthItem(){
         ItemStack item = new ItemStack(Material.POTION);
         PotionMeta meta = (PotionMeta) item.getItemMeta();
-        meta.setDisplayName(Text.colorize("&4Strong Health Potion"));
+        meta.setDisplayName(Text.colorize(CustomConfig.getConfig().getString("StrongHealthPiece.Name")));
         List<String> lore = Collections.singletonList(Text.colorize("&6That item gives you power, when your max health 11-15."));
         meta.setLore(lore);
         meta.setColor(Color.ORANGE);
@@ -78,7 +78,7 @@ public class Items extends JavaPlugin {
     public static ItemStack ultraHealthItem(){
         ItemStack item = new ItemStack(Material.POTION);
         PotionMeta meta = (PotionMeta) item.getItemMeta();
-        meta.setDisplayName(Text.colorize("&4Ultra Health Potion"));
+        meta.setDisplayName(Text.colorize(CustomConfig.getConfig().getString("UltraHealthPiece.Name")));
         List<String> lore = Collections.singletonList(Text.colorize("&6That item gives you power, when your max health 16-20."));
         meta.setLore(lore);
         meta.setColor(Color.RED);
