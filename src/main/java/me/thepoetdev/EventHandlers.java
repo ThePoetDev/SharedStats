@@ -155,6 +155,71 @@ public class EventHandlers implements Listener {
     @EventHandler
     public static void onConsumeFood(PlayerItemConsumeEvent e) {
         if (Main.shareHunger) {
+            if(e.getItem().getType() == Material.POTION){
+                Plugin plugin = Bukkit.getPluginManager().getPlugin("SharedStats");
+                PersistentDataContainer data = e.getItem().getItemMeta().getPersistentDataContainer();
+                if (data.has(new NamespacedKey(plugin, "healthitem"))) {
+                    if (data.get(new NamespacedKey(plugin, "healthitem"), PersistentDataType.STRING).equals("1")) {
+                        e.setCancelled(true);
+                        if (Main.globalMaxHealth >= 10) {
+                            e.getPlayer().sendMessage(Text.colorize("&4You cannot use it anymore."));
+                        } else {
+                            Main.globalMaxHealth += 2;
+                            e.getPlayer().sendMessage(Text.colorize("&6You successfully used health piece."));
+                            e.getPlayer().getInventory().getItem(e.getHand()).setAmount(e.getPlayer().getInventory().getItem(e.getHand()).getAmount() - 1);
+                            Bukkit.getOnlinePlayers().forEach(player -> {
+                                MiscMechanics.setMaxHealth(player);
+                                if (!player.equals(e.getPlayer()))
+                                    player.sendMessage(Text.colorize("&f" + e.getPlayer().getName() + " &6Used health piece to survive us! Thanks to it."));
+                            });
+                        }
+
+                    } else if (data.get(new NamespacedKey(plugin, "healthitem"), PersistentDataType.STRING).equals("2")) {
+                        e.setCancelled(true);
+                        if (Main.globalMaxHealth >= 20) {
+                            e.getPlayer().sendMessage(Text.colorize("&4You cannot use it anymore."));
+                        } else {
+                            Main.globalMaxHealth += 2;
+                            e.getPlayer().sendMessage(Text.colorize("&6You successfully used health piece."));
+                            e.getPlayer().getInventory().getItem(e.getHand()).setAmount(e.getPlayer().getInventory().getItem(e.getHand()).getAmount() - 1);
+                            Bukkit.getOnlinePlayers().forEach(player -> {
+                                MiscMechanics.setMaxHealth(player);
+                                if (!player.equals(e.getPlayer()))
+                                    player.sendMessage(Text.colorize("&f" + e.getPlayer().getName() + " &6Used health piece to survive us! Thanks to it."));
+                            });
+                        }
+                    } else if (data.get(new NamespacedKey(plugin, "healthitem"), PersistentDataType.STRING).equals("3")) {
+                        e.setCancelled(true);
+                        if (Main.globalMaxHealth >= 30) {
+                            e.getPlayer().sendMessage(Text.colorize("&4You cannot use it anymore."));
+                        } else {
+                            Main.globalMaxHealth += 2;
+                            e.getPlayer().sendMessage(Text.colorize("&6You successfully used health piece."));
+                            e.getPlayer().getInventory().getItem(e.getHand()).setAmount(e.getPlayer().getInventory().getItem(e.getHand()).getAmount() - 1);
+                            Bukkit.getOnlinePlayers().forEach(player -> {
+                                MiscMechanics.setMaxHealth(player);
+                                if (!player.equals(e.getPlayer()))
+                                    player.sendMessage(Text.colorize("&f" + e.getPlayer().getName() + " &6Used health piece to survive us! Thanks to it."));
+                            });
+                        }
+                    } else if (data.get(new NamespacedKey(plugin, "healthitem"), PersistentDataType.STRING).equals("4")) {
+                        e.setCancelled(true);
+                        if (Main.globalMaxHealth >= 40) {
+                            e.getPlayer().sendMessage(Text.colorize("&4You cannot use it anymore."));
+                        } else {
+                            Main.globalMaxHealth += 2;
+                            e.getPlayer().sendMessage(Text.colorize("&6You successfully used health piece."));
+                            e.getPlayer().getInventory().getItem(e.getHand()).setAmount(e.getPlayer().getInventory().getItem(e.getHand()).getAmount() - 1);
+                            Bukkit.getOnlinePlayers().forEach(player -> {
+                                MiscMechanics.setMaxHealth(player);
+                                if (!player.equals(e.getPlayer()))
+                                    player.sendMessage(Text.colorize("&f" + e.getPlayer().getName() + " &6Used health piece to survive us! Thanks to it."));
+                            });
+                        }
+                    }
+                }
+            }
+
             if (e.getItem().getType() == Material.ROTTEN_FLESH) {
                 e.getPlayer().getInventory().getItem(e.getHand()).setAmount(e.getPlayer().getInventory().getItem(e.getHand()).getAmount() - 1);
                 Random rand = new Random();
@@ -208,77 +273,5 @@ public class EventHandlers implements Listener {
         e.getPlayer().discoverRecipe(Main.getInstance().getKey2());
         e.getPlayer().discoverRecipe(Main.getInstance().getKey3());
         e.getPlayer().discoverRecipe(Main.getInstance().getKey4());
-    }
-
-    @EventHandler
-    public static void onRightClick(PlayerInteractEvent e) {
-        if (e.getItem() == null) {
-            return;
-        }
-        if (e.getAction().isRightClick()) {
-            ItemStack item = e.getItem();
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("SharedStats");
-            PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
-            if (data.has(new NamespacedKey(plugin, "healthitem"))) {
-                if (data.get(new NamespacedKey(plugin, "healthitem"), PersistentDataType.STRING).equals("1")) {
-                    e.setCancelled(true);
-                    if (Main.globalMaxHealth >= 10) {
-                        e.getPlayer().sendMessage(Text.colorize("&4You cannot use it anymore."));
-                    } else {
-                        Main.globalMaxHealth += 2;
-                        e.getPlayer().sendMessage(Text.colorize("&6You successfully used health piece."));
-                        item.setAmount(item.getAmount() - 1);
-                        Bukkit.getOnlinePlayers().forEach(player -> {
-                            MiscMechanics.setMaxHealth(player);
-                            if (!player.equals(e.getPlayer()))
-                                player.sendMessage(Text.colorize("&f" + e.getPlayer().getName() + " &6Used health piece to survive us! Thanks to it."));
-                        });
-                    }
-
-                } else if (data.get(new NamespacedKey(plugin, "healthitem"), PersistentDataType.STRING).equals("2")) {
-                    e.setCancelled(true);
-                    if (Main.globalMaxHealth >= 20) {
-                        e.getPlayer().sendMessage(Text.colorize("&4You cannot use it anymore."));
-                    } else {
-                        Main.globalMaxHealth += 2;
-                        e.getPlayer().sendMessage(Text.colorize("&6You successfully used health piece."));
-                        item.setAmount(item.getAmount() - 1);
-                        Bukkit.getOnlinePlayers().forEach(player -> {
-                            MiscMechanics.setMaxHealth(player);
-                            if (!player.equals(e.getPlayer()))
-                                player.sendMessage(Text.colorize("&f" + e.getPlayer().getName() + " &6Used health piece to survive us! Thanks to it."));
-                        });
-                    }
-                } else if (data.get(new NamespacedKey(plugin, "healthitem"), PersistentDataType.STRING).equals("3")) {
-                    e.setCancelled(true);
-                    if (Main.globalMaxHealth >= 30) {
-                        e.getPlayer().sendMessage(Text.colorize("&4You cannot use it anymore."));
-                    } else {
-                        Main.globalMaxHealth += 2;
-                        e.getPlayer().sendMessage(Text.colorize("&6You successfully used health piece."));
-                        item.setAmount(item.getAmount() - 1);
-                        Bukkit.getOnlinePlayers().forEach(player -> {
-                            MiscMechanics.setMaxHealth(player);
-                            if (!player.equals(e.getPlayer()))
-                                player.sendMessage(Text.colorize("&f" + e.getPlayer().getName() + " &6Used health piece to survive us! Thanks to it."));
-                        });
-                    }
-                } else if (data.get(new NamespacedKey(plugin, "healthitem"), PersistentDataType.STRING).equals("4")) {
-                    e.setCancelled(true);
-                    if (Main.globalMaxHealth >= 40) {
-                        e.getPlayer().sendMessage(Text.colorize("&4You cannot use it anymore."));
-                    } else {
-                        Main.globalMaxHealth += 2;
-                        e.getPlayer().sendMessage(Text.colorize("&6You successfully used health piece."));
-                        item.setAmount(item.getAmount() - 1);
-                        Bukkit.getOnlinePlayers().forEach(player -> {
-                            MiscMechanics.setMaxHealth(player);
-                            if (!player.equals(e.getPlayer()))
-                                player.sendMessage(Text.colorize("&f" + e.getPlayer().getName() + " &6Used health piece to survive us! Thanks to it."));
-                        });
-                    }
-                }
-            }
-        }
     }
 }

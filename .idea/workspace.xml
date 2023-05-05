@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="35b494c6-9b6a-4de4-bc16-f787c42245c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/thepoetdev/EventHandlers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/thepoetdev/EventHandlers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/thepoetdev/utils/Items.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/thepoetdev/utils/Items.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
